@@ -1,3 +1,6 @@
 .venv/
 chroma_db/
 __pycache__/
+.env
+applications.db
+logs/
