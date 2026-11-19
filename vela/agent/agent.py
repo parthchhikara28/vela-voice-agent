@@ -6,6 +6,7 @@ from vela.agent.tools import TOOLS, run_tool
 
 def respond(history, user_text, trace):
     """Take what the traveller said, use tools if needed, return the spoken reply."""
+    start = len(history)  # remember where this turn begins
     history.append({"role": "user", "content": user_text})
     trace.transcript = user_text
 
@@ -15,6 +16,9 @@ def respond(history, user_text, trace):
 
         if not calls:
             reply = (msg.get("content") or "").strip()
+            # Keep only the spoken words, drop the bulky tool results
+            del history[start:]
+            history.append({"role": "user", "content": user_text})
             history.append({"role": "assistant", "content": reply})
             trace.reply = reply
             trace.mark("llm_done")
@@ -31,5 +35,6 @@ def respond(history, user_text, trace):
             history.append({"role": "tool", "tool_call_id": c["id"],
                             "content": json.dumps(result)})
 
+    del history[start:]
     trace.reply = "Sorry, I got stuck. Let me connect you to a human."
     return trace.reply
