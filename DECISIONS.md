@@ -74,3 +74,17 @@ Format: what I chose, why, and what it costs.
 - BARGE_MS (interruption threshold): ____ ms, because ____
 - Why cancelling on interruption truncates the history to what was actually heard
 - Why the judge model differs from the agent model
+## D14. Push-to-talk with Enter instead of a held key
+- **Chose:** press Enter to start recording, Enter again to stop.
+- **Why:** simplest loop that works on Windows. Real-time VAD replaces it in Milestone 3.
+- **Cost:** not hands-free.
+
+## D15. Whisper base.en, int8, on CPU
+- **Chose:** a small local model.
+- **Why:** free, private, fits in 8 GB RAM, fast enough to start with.
+- **Cost:** weaker on accents and noise than bigger models. To be measured per condition in Milestone 4.
+
+## D16. Windows built-in voice (pyttsx3) as a placeholder
+- **Chose:** the voice already on the laptop.
+- **Why:** zero setup, so I can finish the pipeline first.
+- **Cost:** robotic, and it can't stream audio in pieces. To be replaced by a streaming voice before barge-in.
